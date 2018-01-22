@@ -13,6 +13,6 @@ app.get('/',(req,res)=>{
     });
 });
 
-app.listen(5555,()=>{
+app.listen(PORT,()=>{
     console.log('App running on port 5550');
 });
