@@ -14,14 +14,18 @@
   var socket = io();
     socket.on('connect',()=>{
         console.log('Connected to server');
-        socket.emit('createMessage',{
-            from:'jared',
-            text:'hello everyone'
-        });
-        
+
         socket.on('newMessage',(message)=>{
             console.log('Message');
             console.log(message);
+        });
+        
+        socket.on('salut',(salut)=>{
+            console.log(salut);
+        });
+
+        socket.on('newU',(join)=>{
+            console.log(join);
         });
         
     });
