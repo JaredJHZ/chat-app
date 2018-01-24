@@ -2,52 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{title}}</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <title>Join || Chat app</title>
 </head>
-<body class="chat">
-        <div class="chat__sidebar">
-            <h3>People</h3>
-            <div id="users">
-
+<body class="centered-form">
+    <div class="centered-form__form">
+        <form action="/chat.html">
+            <div class="form-field">
+                <h3>Join a Chat</h3>
             </div>
-        </div>
-        <div class="chat__main">
-            <ol class="chat__messages" id="messages"></ol>
-            
-            <div class="chat__footer">
-                <form id="message-form" action="">
-                    <input name="message" type="text" placeholder="Message" autocomplete="off" autofocus>
-                    <button>Send</button>
-                    <button id="geo-button">Send location</button>
-                </form>
+            <div class="form-field">
+                <label for="">User name</label>
+                <input type="text" name="name" autofocus>
             </div>
-        </div>
-
+            <div class="form-field">
+                <label for="">Room name</label>
+                <input type="text" name="room" id="">
+            </div>
+            <div class="form-field">
+                <button>Join</button>
+            </div>
+        </form>
+    </div>
 </body>
-<script id="message-template" type="text/template">
-    <div class="message__title">
-        <h4>{{from}}</h4>
-        <span>{{time}}</span>
-    </div>
-    <div class="message__body">
-        <p>{{text}}</p>
-    </div>
-</script>
-<script id="location-template" type="text/template">
-    <div class="message__title">
-        <h4>{{from}}</h4>
-        <span>{{date}}</span>
-    </div>
-    <div class="message__body">
-        <a href="{{url}}" target="_blank">Location</a>
-    </div>
-</script>
-<script src="./js/jquery.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="./js/index.js"></script>
-<script src="./js/mustache.js"></script>
-<script src="./js/moment.js"></script>
 </html>

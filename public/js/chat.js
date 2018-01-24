@@ -4,6 +4,22 @@ socket.on('connect',()=>{
     
 });
 
+function scrollToBottom(){
+     // Selectors
+  var messages = jQuery('#messages');
+  var newMessage = messages.children('li:last-child')
+  // Heights
+  var clientHeight = messages.prop('clientHeight');
+  var scrollTop = messages.prop('scrollTop');
+  var scrollHeight = messages.prop('scrollHeight');
+  var newMessageHeight = newMessage.innerHeight();
+  var lastMessageHeight = newMessage.prev().innerHeight();
+
+  if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+    messages.scrollTop(scrollHeight);
+  }
+}
+
 socket.on('newMessage',(message)=>{
         var template = jQuery('#message-template').html();
         var formattedTime = moment(message.createdAt).format('HH:mm A');
@@ -13,7 +29,7 @@ socket.on('newMessage',(message)=>{
             time:formattedTime
         });
         $('#messages').append(html);
-       
+       scrollToBottom();
    
     });
 
@@ -40,6 +56,7 @@ socket.on('newLocationMessage',function(message){
         date:formattedTime,
         url:message.url
     });
+    scrollToBottom();
     jQuery('#messages').append(html);
 
 });
