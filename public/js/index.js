@@ -5,11 +5,16 @@ socket.on('connect',()=>{
 });
 
 socket.on('newMessage',(message)=>{
-        console.log('Message');
-        console.log(message);
-        var li = jQuery('<li></li>');
-        li.text(message.from+": "+message.text);
-        jQuery('#messages').append(li);
+        var template = jQuery('#message-template').html();
+        var formattedTime = moment(message.createdAt).format('HH:mm A');
+        var html = Mustache.render(template,{
+            text:message.text,
+            from:message.from,
+            time:formattedTime
+        });
+        $('#messages').append(html);
+       
+   
     });
 
 socket.on('salut',(salut)=>{
@@ -27,11 +32,15 @@ socket.on('newU',(join)=>{
     });
 
 socket.on('newLocationMessage',function(message){
-    var li = jQuery('<li></li>');
-    var a = jQuery('<a target="_blank">My current location</a>');
-    a.attr('href',message.url);
-    li.append(a);
-    jQuery('#messages').append(li);
+    var formattedTime = moment(message.createdAt).format('HH:mm A');
+    var template = jQuery('#location-template').html();
+    console.log(formattedTime);
+    var html = Mustache.render(template,{
+        from:message.from,
+        date:formattedTime,
+        url:message.url
+    });
+    jQuery('#messages').append(html);
 
 });
 
@@ -58,7 +67,9 @@ geo.on('click',function(){
     navigator.geolocation.getCurrentPosition(function(position){
         socket.emit('createLocationMessage',{
             latitud:position.coords.latitude, 
-            longitude:position.coords.longitude});
+            longitude:position.coords.longitude,
+            from:'user'
+        });
             geo.removeAttr('disabled').text('Send location');
     },function(){
         alert('Unable to get geolocation');

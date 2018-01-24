@@ -27,7 +27,27 @@
         </div>
 
 </body>
+<script id="message-template" type="text/template">
+    <div class="message__title">
+        <h4>{{from}}</h4>
+        <span>{{time}}</span>
+    </div>
+    <div class="message__body">
+        <p>{{text}}</p>
+    </div>
+</script>
+<script id="location-template" type="text/template">
+    <div class="message__title">
+        <h4>{{from}}</h4>
+        <span>{{date}}</span>
+    </div>
+    <div class="message__body">
+        <a href="{{url}}" target="_blank">Location</a>
+    </div>
+</script>
 <script src="./js/jquery.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="./js/index.js"></script>
+<script src="./js/mustache.js"></script>
+<script src="./js/moment.js"></script>
 </html>

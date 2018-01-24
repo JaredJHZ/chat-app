@@ -1,14 +1,15 @@
-
+var moment = require('moment');
     var generateMessage = (from,text)=>{
-        return {from,text,createdAt : new Date().getTime};
+        var date = moment().valueOf();
+        return {from,text,createdAt : date};
     }
 
     var generateLocationMessage = (from,lat,long) =>{
+        var date = moment().valueOf();
         return {
             from,
-            url: 'https://www.google.com/maps?q='+lat+','+long,
-            createdAt: new Date().getTime
-        };
-    }
-
+            url: "https://www.google.com/maps?q="+lat+','+long ,
+            createdAt:date
+         };
+        }
 module.exports = {generateMessage,generateLocationMessage};
