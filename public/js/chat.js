@@ -10,8 +10,6 @@ socket.on('connect',()=>{
         if(err){
             alert(err);
             window.location.href = '/';
-        }else{
-            console.log('No error');
         }
 
     });
@@ -52,7 +50,7 @@ var message = jQuery('[name=message]');
 jQuery('#message-form').on('submit',function(e){
     e.preventDefault();
     socket.emit('createMessage',
-    {from:'User',text:message.val()}, 
+    {text:message.val()}, 
     function(){
         message.val('');
     });  
@@ -68,8 +66,7 @@ geo.on('click',function(){
     navigator.geolocation.getCurrentPosition(function(position){
         socket.emit('createLocationMessage',{
             latitud:position.coords.latitude, 
-            longitude:position.coords.longitude,
-            from:'user'
+            longitude:position.coords.longitude
         });
             geo.removeAttr('disabled').text('Send location');
     },function(){
@@ -83,14 +80,14 @@ geo.on('click',function(){
 //list of users
 
 socket.on('updateUserList', function (users) {
-    var ol = jQuery('<ol></ol>');
-  
-    users.forEach(function (user) {
-      ol.append(jQuery('<li></li>').text(user));
-    });
-  
-    jQuery('#users').html(ol);
+  var ol = jQuery('<ol></ol>');
+
+  users.forEach(function (user) {
+    ol.append(jQuery('<li></li>').text(user));
   });
+
+  jQuery('#users').html(ol);
+});
 
 
 

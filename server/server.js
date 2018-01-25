@@ -39,20 +39,24 @@ io.on('connection',(socket)=>{
     });
     
     socket.on('createMessage',(message,callback)=>{
-        console.log(message);
-        io.emit('newMessage',generateMessage('user',message.text));
-        callback();
+        let user = users.getUser(socket.id);
+        if(user){
+            io.to(user.room).emit('newMessage',generateMessage(user.name,message.text));
+            callback();
+        }
+        callback('error');
     });
 
     socket.on('createLocationMessage',(coords)=>{
-        io.emit("newLocationMessage",generateLocationMessage(coords.from,coords.latitud,coords.longitude));
-
+        let user = users.getUser(socket.id);
+        if(user){
+            io.to(user.room).emit("newLocationMessage",generateLocationMessage(coords.from,coords.latitud,coords.longitude,user.name));
+        }
     });
     
     
     socket.on('disconnect',()=>{
         var user = users.removeUser(socket.id);
-        console.log(user);
         if(users){
             io.to(user.room).emit("updateUserList",users.getUserList(user.room));
             io.to(user.room).emit("newMessage",generateMessage('Admin',user.name+' user has left'));
